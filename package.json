@@ -1,0 +1,22 @@
+{
+  "name": "plane",
+  "version": "1.0.0",
+  "description": "a plane game became",
+  "main": "点我开始游戏.html",
+  "scripts": {
+    "test": "3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lhyt/plane.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "pp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lhyt/plane/issues"
+  },
+  "homepage": "https://github.com/lhyt/plane#readme"
+}

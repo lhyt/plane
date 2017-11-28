@@ -1,0 +1,99 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-image: url('../img/bg_1.jpg');
+  color: #fff;
+  background-size: cover;
+}
+
+.ui-index {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  margin-top: -142px;
+
+}
+
+.ui-index h1 {
+  font-size: 50px;
+  text-shadow: 2px 8px 2px #000;
+  text-align: center;
+}
+
+.ui-index .btn {
+  display: block;
+  color: #fff;
+  font-size: 20px;
+  background: none;
+  border: 1px solid #999;
+  border-radius: 6px;
+  width: 140px;
+  /* margin-bottom: 14px; */
+  /* 上右下左 */
+  margin: 0 auto 14px auto;
+}
+
+.ui-panel {
+  width: 80%;
+  background: #070808;
+  padding: 14px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  margin-top: -109px;
+}
+
+
+.ui-panel button {
+  color: #fff;
+  border: 1px solid #fff;
+  background: none;
+  font-size: 18px;
+}
+
+
+.setting-group {
+  list-style: none;
+  padding: 0;
+}
+
+.setting-group .setting {
+  margin-bottom: 10px;
+}
+
+.setting-group select {
+  width: 100px;
+  background: #fff;
+  margin-left: 10px;
+  border-radius: 0;
+}
+
+/*ui 默认是隐藏*/
+.ui-index,
+.ui-rule,
+.ui-setting,
+.ui-nan {
+  display: none;
+}
+
+/*游戏状态切换场景*/
+[data-status="index"] .ui-index {
+  display: block;
+} 
+[data-status="setting"] .ui-setting {
+  display: block;
+} 
+[data-status="rule"] .ui-rule {
+  display: block;
+} 
+[data-status="nan"] .ui-nan {
+  display: block;
+} 

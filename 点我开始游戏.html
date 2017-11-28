@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/css/style.css" rel="stylesheet">
+  </head>
+  <body data-status="index">
+    <button  class="aaa">←</button>
+    <button  class="bbb">主页</button>
+    <canvas id="game"></canvas>
+    <div class="ui-index">
+      <h1>丘比特射心</h1>
+      <div class="btn-group">
+        <button class="js-start btn">开始游戏</button>
+        <button class="js-rule btn">游戏说明</button>
+        <button class="js-setting btn">游戏设置</button>
+        <button class="js-nan btn">难度选择</button>
+      </div>
+    </div>
+    <div class="ui-rule ui-panel">
+      <h2>游戏说明</h2>
+      <p>手指移动飞机，不是白色心心的全是敌人，是男人就坚持90秒。电脑的按f12进入开发者工具模拟手机环境，按住鼠标拖动飞机（类似人用手触屏）。具体步骤：f12→点击三个点设置屏幕左右分布→ctrl+shift+m，显示有问题按ctrl+0，还可以在上面选择模拟苹果手机哦</p>
+      <button class="js-confirm-rule">我知道了</button>
+    </div>
+    <div class="ui-nan ui-panel">
+      <h2>难度选择</h2>
+      <select id="setting-nan">
+        <option class="nandu" value="1">简单</option>
+        <option class="nandu" value="2">一般</option>
+        <option class="nandu" value="3">困难</option>
+        <option class="nandu" value="4">恶梦</option>
+      </select>
+      <button class="js-confirm-rule">OK</button>
+    </div>
+    <div class="ui-setting ui-panel">
+      <h2>游戏设置</h2>
+      <ul class="setting-group">
+        <li class="setting">
+          <span class="setting-title">音乐设置</span>
+          <select id="setting-music">
+            <option value="1">开启音乐</option>
+            <option value="0">关闭音乐</option>
+          </select>
+        </li>
+        <li class="setting">
+          <span class="setting-title">背景设置</span>
+          <select id="setting-bg">
+            <option class="beijing" value="1">海上夕阳</option>
+            <option class="beijing" value="2">紫色熏衣</option>
+            <option class="beijing" value="3">夜幕降临</option>
+            <option class="beijing" value="4">血红之夜</option>
+          </select>
+        </li>
+        <li class="setting">
+          <span class="setting-title">战机设置</span>
+          <select id="setting-plane">
+            <option value="bluePlaneIcon">红色丘比特</option>
+            <option value="pinkPlaneIcon">粉红战机</option>
+          </select>
+        </li>
+      </ul>
+      <button class="js-confirm-setting">确认设置</button>
+    </div>
+    
+    <audio id="yinyue">
+      <source src="static/fight_3.mp3" type="audio/mpeg">
+    您的浏览器不支持 audio 元素。
+    </audio>
+    <!-- 页面 js -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    
+    <script>
+      document.getElementById("yinyue").play();
+      //更改背景
+      var selectValue;
+      $("#setting-bg").change(function(){
+        selectValue = $("#setting-bg").val();
+        if (selectValue==1) {
+          $("body").css("background","url('static/img/bg_1.jpg')");
+        }if (selectValue==2) {
+          $("body").css("background","url('static/img/bg_2.jpg')");
+        }if (selectValue==3) {
+          $("body").css("background","url('static/img/bg_3.jpg')");
+        }if (selectValue==4) {
+          $("body").css("background","url('static/img/bg_4.jpg')");}
+          $("body").css("background-size","cover");
+        })
+
+      var ha
+      $("#setting-nan").change(function(){
+        ha = $("#setting-nan").val();
+        if (ha==1) {
+          CONFIG.enemyMaxNum=12;
+        }if (ha==2) {
+          CONFIG.enemyMaxNum=18;
+        }if (ha==3) {
+          CONFIG.enemyMaxNum=25;
+          CONFIG.enemySpeed=6;
+        }if (ha==4) {
+          CONFIG.enemyMaxNum=50;
+          CONFIG.enemySpeed=8;}
+        })
+    </script>
+    <script src="control/config.js"></script>
+    <script src="control/resource.js"></script>
+    <script src="control/element.js"></script>
+    <script src="control/bullet.js"></script>
+    <script src="control/enemy.js"></script>
+    <script src="control/plane.js"></script>
+    <script src="control/app.js"></script>
+    <script>
+      var selectValue1;
+      $("#setting-plane").change(function(){
+        selectValue1 = $("#setting-plane").val();
+        if(selectValue1=='bluePlaneIcon'){CONFIG.planeType='bluePlaneIcon'
+      }if(selectValue1=='pinkPlaneIcon'){CONFIG.planeType='pinkPlaneIcon'}
+        })
+        var theFirstTime=new Date();
+        
+        var selectValue2;
+        $("#setting-music").change(function(){
+          selectValue2 = $("#setting-music").val();
+          if(selectValue2==0){
+          document.getElementById("yinyue").pause();
+          }if(selectValue2==1){
+            document.getElementById("yinyue").play();
+          }
+        })
+
+        $body.on('click', '.aaa', function() {
+          GAME.init();
+          GAME.start();
+        });
+
+
+      var fcolor="#fff";
+      var newOn=200;
+      var flake=$("<div></div>").css("position","absolute").html("❤");
+      $(function(){
+          var dWidth=$(document).width();
+          var dHeitht=$(document).height();
+          setInterval(function(){
+              var startLeft=Math.random()*dWidth;
+              var flakeSize=5+50*Math.random();
+              var startOpa=0.7+0.3*Math.random();
+              var endOpa=0.4+0.3*Math.random();
+              var endLeft=Math.random()*dWidth;
+              var durationTime=3000+7000*Math.random();
+              flake.clone().appendTo($("body")).css({
+                  "top":"-55px",
+                  "left":startLeft,
+                  "font-size":flakeSize,
+                  "color":fcolor,
+                  "opacity":startOpa
+              }).animate({
+                  "top":dHeitht,
+                  "left":endLeft,
+                  "opacity":endOpa
+              },durationTime,function(){
+                  $(this).remove();
+              });
+          },newOn);
+      });
+
+      $body.on('click', '.bbb', function() {
+          context.clearRect(0, 0, canvasWidth, canvasHeight);
+          GAME.enemies = [];
+          $body.attr('data-status', 'index');
+          if(!GAME.start()){return;}
+
+        });
+          
+    </script>
+  </body>
+</html>
